@@ -11,9 +11,11 @@ import "ui/Tile"
 
 Window {
     width: 800
-    height: 600
+    height: 300 //600
     visible: true
     title: qsTr("Image Manipulator")
+
+
 
     LeftBar{
         id: ui
@@ -28,60 +30,99 @@ Window {
             }
         }
 
-        Tile {
-            id: rotateIcon
-            source: "qrc:/ui/assets/rotate_right.png"
-            anchors.top: loadIcon.bottom
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: imageProcessor.rotateImage()
+        Rectangle {
+            id: scrollRect
+            clip: true
+            width: parent.width
+            color: "green"
+            anchors {
+                top: loadIcon.bottom
+                topMargin: parent.height / 30
+                bottom: saveIcon.top
+                bottomMargin: parent.height / 30
             }
-        }
 
-        Tile {
-            id: hmirrorIcon
-            source: "qrc:/ui/assets/h_mirror.png"
-            anchors.top: rotateIcon.bottom
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: imageProcessor.hMirrorImage()
-            }
-        }
+            ScrollView {
+                id: scrollUi
+                width: parent.width
+                height: parent.height
+                //clip: false
+                contentItem:
 
-        Tile {
-            id: vmirrorIcon
-            source: "qrc:/ui/assets/v_mirror.png"
-            anchors.top: hmirrorIcon.bottom
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: imageProcessor.vMirrorImage()
-            }
-        }
+                    Flickable {
+                    contentHeight: 260 //happy 260
+                    width: parent.width
+                    boundsBehavior: Flickable.DragOverBounds
 
-        Tile {
-            id: blackWhiteIcon
-            source: "qrc:/ui/assets/black_white.png"
-            anchors.top: vmirrorIcon.bottom
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: imageProcessor.bwImage()
-            }
-        }
+                    Rectangle {
+                        color: "transparent"
+                        width: parent.width
+                        height: parent.height
 
-        Tile {
-            id: sliderIcon
-            source: "qrc:/ui/assets/sliders.png"
-            anchors.top: blackWhiteIcon.bottom
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: rgbPopup.open();
-            }
-        }
+                        Tile {
+                            id: rotateIcon
+                            source: "qrc:/ui/assets/rotate_right.png"
+                            anchors.top: parent.top  //loadIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.rotateImage()
+                            }
+                        }
+
+                        Tile {
+                            id: hmirrorIcon
+                            source: "qrc:/ui/assets/h_mirror.png"
+                            anchors.top: rotateIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.hMirrorImage()
+                            }
+                        }
+
+                        Tile {
+                            id: vmirrorIcon
+                            source: "qrc:/ui/assets/v_mirror.png"
+                            anchors.top: hmirrorIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.vMirrorImage()
+                            }
+                        }
+
+                        Tile {
+                            id: blackWhiteIcon
+                            source: "qrc:/ui/assets/black_white.png"
+                            anchors.top: vmirrorIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.bwImage()
+                            }
+                        }
+
+                        Tile {
+                            id: sliderIcon
+                            source: "qrc:/ui/assets/sliders.png"
+                            anchors.top: blackWhiteIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: rgbPopup.open();
+                            }
+                        }
+
+                    } // rectangle closing tag
+
+                } // flickable closing tag
+
+            } // scrollView closing tag
+
+        } // scrollRect closing tag
+
+
 
         Image {
             id: saveIcon
@@ -99,7 +140,15 @@ Window {
                 cursorShape: Qt.PointingHandCursor
             }
         }
-    }
+
+    } // left bar closing tag
+
+
+
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
 
     ImgArea {
         id: imgArea
