@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ui/LeftBar/LeftBar.qml</file>
+        <file>ui/ImgArea/ImgArea.qml</file>
+        <file>ui/assets/black_white.png</file>
+        <file>ui/assets/open_file.png</file>
+        <file>ui/assets/rotate_right.png</file>
+        <file>ui/assets/save_file.png</file>
+        <file>ui/assets/app_icon.png</file>
+        <file>ui/assets/h_mirror.png</file>
+        <file>ui/assets/v_mirror.png</file>
+        <file>ui/assets/sliders.png</file>
+        <file>ui/Tile/Tile.qml</file>
+        <file>ui/assets/data.json</file>
+    </qresource>
+</RCC>
