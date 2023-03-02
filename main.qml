@@ -7,14 +7,14 @@ import "ui/assets"
 import "ui/LeftBar"
 import "ui/ImgArea"
 import "ui/Tile"
+import "ui/JsonMaker/JsonMaker.js" as JsonMaker
 
 
 Window {
     width: 800
-    height: 300 //600
+    height: 600 //600
     visible: true
     title: qsTr("Image Manipulator")
-
 
 
     LeftBar{
@@ -26,7 +26,10 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: file_dialog.open()
+                onClicked: {
+                    //JsonMaker.export2json()
+                    file_dialog.open()
+                }
             }
         }
 
@@ -34,7 +37,7 @@ Window {
             id: scrollRect
             clip: true
             width: parent.width
-            color: "green"
+            color: "black"
             anchors {
                 top: loadIcon.bottom
                 topMargin: parent.height / 30
@@ -46,11 +49,12 @@ Window {
                 id: scrollUi
                 width: parent.width
                 height: parent.height
+
                 //clip: false
                 contentItem:
 
                     Flickable {
-                    contentHeight: 260 //happy 260
+                    contentHeight: rotateIcon.height * 11 //happy 260
                     width: parent.width
                     boundsBehavior: Flickable.DragOverBounds
 
@@ -104,15 +108,49 @@ Window {
                         }
 
                         Tile {
+                            id: excessIcon1
+                            source: "qrc:/ui/assets/black_white.png"
+                            anchors.top: blackWhiteIcon.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.bwImage()
+                            }
+                        }
+
+                        Tile {
+                            id: excessIcon2
+                            source: "qrc:/ui/assets/black_white.png"
+                            anchors.top: excessIcon1.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.bwImage()
+                            }
+                        }
+
+                        Tile {
+                            id: excessIcon3
+                            source: "qrc:/ui/assets/black_white.png"
+                            anchors.top: excessIcon2.bottom
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: imageProcessor.bwImage()
+                            }
+                        }
+                        Tile {
                             id: sliderIcon
                             source: "qrc:/ui/assets/sliders.png"
-                            anchors.top: blackWhiteIcon.bottom
+                            anchors.top: excessIcon3.bottom
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: rgbPopup.open();
                             }
                         }
+
+
 
                     } // rectangle closing tag
 
@@ -171,7 +209,7 @@ Window {
             dim: false
             parent: sliderIcon
             x: Math.round(parent.width) * 1.4
-            y: Math.round(parent.height - (height / 3))
+            y: Math.round(parent.height - (height / 1.5)) // /3
             width: sliderIcon.width * 4
             height: sliderIcon.height * 3
             background: Rectangle {
@@ -259,6 +297,7 @@ Window {
                     onValueChanged: {
                         jsonHandler.writeColorToJson(128, 128, blueSlider.value)
                         imageProcessor.colorTransformImage()
+
                     }
                 }
             }

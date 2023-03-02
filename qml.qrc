@@ -13,5 +13,6 @@
         <file>ui/assets/sliders.png</file>
         <file>ui/Tile/Tile.qml</file>
         <file>ui/assets/data.json</file>
+        <file>ui/JsonMaker/JsonMaker.js</file>
     </qresource>
 </RCC>
