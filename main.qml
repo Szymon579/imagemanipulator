@@ -109,7 +109,7 @@ Window {
 
                         Tile {
                             id: excessIcon1
-                            source: "qrc:/ui/assets/black_white.png"
+                            source: "qrc:/ui/assets/wip.png"
                             anchors.top: blackWhiteIcon.bottom
                             MouseArea {
                                 anchors.fill: parent
@@ -120,7 +120,7 @@ Window {
 
                         Tile {
                             id: excessIcon2
-                            source: "qrc:/ui/assets/black_white.png"
+                            source: "qrc:/ui/assets/wip.png"
                             anchors.top: excessIcon1.bottom
                             MouseArea {
                                 anchors.fill: parent
@@ -131,7 +131,7 @@ Window {
 
                         Tile {
                             id: excessIcon3
-                            source: "qrc:/ui/assets/black_white.png"
+                            source: "qrc:/ui/assets/wip.png"
                             anchors.top: excessIcon2.bottom
                             MouseArea {
                                 anchors.fill: parent
@@ -182,10 +182,6 @@ Window {
     } // left bar closing tag
 
 
-    //////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////
 
     ImgArea {
         id: imgArea
@@ -239,7 +235,7 @@ Window {
                     onValueChanged: {
                         var obj = JsonMaker.export2json(redSlider.value,
                                     greenSlider.value, blueSlider.value)
-                        jsonHandler.makeJsonObject(obj)
+                        jsonHandler.readColorFromJsonObject(obj)
                         imageProcessor.colorTransformImage()
                     }
                 }
@@ -269,7 +265,7 @@ Window {
                     onValueChanged: {
                         var obj = JsonMaker.export2json(redSlider.value,
                                     greenSlider.value, blueSlider.value)
-                        jsonHandler.makeJsonObject(obj)
+                        jsonHandler.readColorFromJsonObject(obj)
                         imageProcessor.colorTransformImage()
                     }
                 }
@@ -299,7 +295,7 @@ Window {
                     onValueChanged: {
                         var obj = JsonMaker.export2json(redSlider.value,
                                     greenSlider.value, blueSlider.value)
-                        jsonHandler.makeJsonObject(obj)
+                        jsonHandler.readColorFromJsonObject(obj)
                         imageProcessor.colorTransformImage()
                     }
                 }

@@ -56,9 +56,9 @@ private:
     int green_delta;
     int blue_delta;
 
-    int prev_red_delta;
-    int prev_green_delta;
-    int prev_blue_delta;
+    int prev_red_val;
+    int prev_green_val;
+    int prev_blue_val;
 
 };
 

@@ -34,12 +34,9 @@ void ImageProcessor::QmlPreview()
 
 void ImageProcessor::setColorsDelta()
 {
-    //JsonHandler json;
-
-
-    red_delta = JsonHandler::m_red - 128;
-    green_delta = JsonHandler::m_green - 128;
-    blue_delta = JsonHandler::m_blue - 128;
+    red_delta = JsonHandler::getJsonR() - 128;
+    green_delta = JsonHandler::getJsonG() - 128;
+    blue_delta = JsonHandler::getJsonB() - 128;
 
     qDebug() << "red delta: " <<red_delta;
     qDebug() << "green delta: " << green_delta;
@@ -118,7 +115,7 @@ void ImageProcessor::colorTransformImage()
 
     int new_color_val;
 
-    if(red_delta != 0)
+    if(red_delta != prev_red_val) //red_delta != 0
     {
         for(int i = 0; i < height; i++)
         {
@@ -138,7 +135,7 @@ void ImageProcessor::colorTransformImage()
         }
     }
 
-    if(green_delta != 0)
+    if(green_delta != prev_green_val) //green_delta != 0
     {
         for(int i = 0; i < height; i++)
         {
@@ -158,7 +155,7 @@ void ImageProcessor::colorTransformImage()
         }
     }
 
-    if(blue_delta != 0)
+    if(blue_delta != prev_blue_val) //blue_delta != 0
     {
         for(int i = 0; i < height; i++)
         {
@@ -178,9 +175,9 @@ void ImageProcessor::colorTransformImage()
         }
     }
 
-    JsonHandler::m_red = 0;
-    JsonHandler::m_green = 0;
-    JsonHandler::m_blue = 0;
+    prev_red_val = red_delta;
+    prev_green_val = green_delta;
+    prev_blue_val = blue_delta;
 
     QmlPreview();
 }

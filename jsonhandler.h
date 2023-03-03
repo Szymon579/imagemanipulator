@@ -12,23 +12,17 @@ class JsonHandler : public QObject
 public:
     explicit JsonHandler(QObject *parent = nullptr);
 
-    inline QJsonObject getJsonObject(){ return m_json_obj; };
-
-    int getJsonR(){ return m_red; };
-    int getJsonG(){ return m_green; };
-    int getJsonB(){ return m_blue; };
+    static inline int getJsonR(){ return m_red; };
+    static inline int getJsonG(){ return m_green; };
+    static inline int getJsonB(){ return m_blue; };
 
 
 public slots:
-    QJsonObject makeJsonObject(QJsonObject json_obj);
     void readColorFromJsonObject(QJsonObject json_obj);
 
 signals:
 
-
-public:
-    QJsonObject m_json_obj;
-
+private:
     static int m_red;
     static int m_green;
     static int m_blue;
