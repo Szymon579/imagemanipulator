@@ -1,13 +1,8 @@
-function export2json(r, g, b) {
+function export2json(red, green, blue) {
 
-    let originalData =
-            {
-                "red": r,
-                "green": g,
-                "blue": b
-            }
+    var obj = { "red": red, "green": green, "blue": blue };
+    console.log(JSON.stringify(obj));
 
-    //JSON.stringify(originalData);
-    console.log(originalData);
-
+    //return JSON.stringify(obj);
+    return obj;
 }

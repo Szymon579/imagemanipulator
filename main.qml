@@ -27,7 +27,6 @@ Window {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    //JsonMaker.export2json()
                     file_dialog.open()
                 }
             }
@@ -44,6 +43,7 @@ Window {
                 bottom: saveIcon.top
                 bottomMargin: parent.height / 30
             }
+
 
             ScrollView {
                 id: scrollUi
@@ -182,7 +182,6 @@ Window {
     } // left bar closing tag
 
 
-
     //////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////
@@ -238,9 +237,10 @@ Window {
                     stepSize: 1
                     live: false
                     onValueChanged: {
-                        jsonHandler.writeColorToJson(redSlider.value, 128, 128)
+                        var obj = JsonMaker.export2json(redSlider.value,
+                                    greenSlider.value, blueSlider.value)
+                        jsonHandler.makeJsonObject(obj)
                         imageProcessor.colorTransformImage()
-
                     }
                 }
             }
@@ -267,7 +267,9 @@ Window {
                     stepSize: 1
                     live: false
                     onValueChanged: {
-                        jsonHandler.writeColorToJson(128, greenSlider.value, 128)
+                        var obj = JsonMaker.export2json(redSlider.value,
+                                    greenSlider.value, blueSlider.value)
+                        jsonHandler.makeJsonObject(obj)
                         imageProcessor.colorTransformImage()
                     }
                 }
@@ -295,9 +297,10 @@ Window {
                     stepSize: 1
                     live: false
                     onValueChanged: {
-                        jsonHandler.writeColorToJson(128, 128, blueSlider.value)
+                        var obj = JsonMaker.export2json(redSlider.value,
+                                    greenSlider.value, blueSlider.value)
+                        jsonHandler.makeJsonObject(obj)
                         imageProcessor.colorTransformImage()
-
                     }
                 }
             }
@@ -311,7 +314,6 @@ Window {
         selectFolder: false
         folder: shortcuts.pictures
         onAccepted: {
-            jsonHandler.writeColorToJson(0, 0, 0)
             imageProcessor.setUrl(file_dialog.fileUrl)
             imageProcessor.loadImage()
         }

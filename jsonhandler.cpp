@@ -1,63 +1,111 @@
 #include "jsonhandler.h"
 
 #include <QDebug>
-#include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+
+int JsonHandler::m_red = 0;
+int JsonHandler::m_green = 0;
+int JsonHandler::m_blue = 0;
 
 JsonHandler::JsonHandler(QObject *parent)
     : QObject{parent}
 {
 }
 
-void JsonHandler::writeColorToJson(QString r, QString g, QString b)
+QJsonObject JsonHandler::makeJsonObject(QJsonObject json_obj)
 {
-//    qDebug() << "red: " << r;
-//    qDebug() << "green: " << g;
-//    qDebug() << "blue: " << b;
-
-    QFile file("color_data.json");
-    file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
-
-    QJsonDocument JsonDocument;
-
-    QJsonObject color;
-    color["red"] = r;
-    color["green"] = g;
-    color["blue"] = b;
-
-    JsonDocument.setObject(color);
-
-    file.write(JsonDocument.toJson(QJsonDocument::Indented));
-    file.close();
+    m_json_obj = json_obj;
+    readColorFromJsonObject(m_json_obj);
+    return json_obj;
 }
 
-void JsonHandler::readColorFromJson()
+void JsonHandler::readColorFromJsonObject(QJsonObject json_obj)
 {
-    QString str_r, str_g, str_b;
+    int r = 0, g = 0, b = 0;
+    QJsonValue r_val, g_val, b_val;
 
-    QString val;
-    QFile file("color_data.json");
+    if (json_obj.contains("red"))
+    {
+        //qDebug() << "contains red";
+        r_val = json_obj.find("red").value();
+        r = r_val.toVariant().toInt();
+    }
+    if (json_obj.contains("green"))
+    {
+        //qDebug() << "contains green";
+        g_val = json_obj.find("green").value();
+        g = g_val.toVariant().toInt();
+    }
+    if (json_obj.contains("blue"))
+    {
+        //qDebug() << "contains blue";
+        b_val = json_obj.find("blue").value();
+        b = b_val.toVariant().toInt();
+    }
 
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
-    file.close();
+    m_red = r;
+    m_green = g;
+    m_blue = b;
 
-    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject obj = doc.object();
+    //qDebug() << "QJsonValRef:" << r_val;
+    //qDebug() << "QJsonValRef:" << g_val;
+    //qDebug() << "QJsonValRef:" << b_val;
 
-    if (obj.contains("red"))
-            str_r = obj["red"].toString();
-
-    if (obj.contains("green"))
-            str_g = obj["green"].toString();
-
-    if (obj.contains("blue"))
-            str_b = obj["blue"].toString();
-
-    json_r =  str_r.toInt();
-    json_g = str_g.toInt();
-    json_b =  str_b.toInt();
+    qDebug() << "QJsonValRef int r:" << r;
+    qDebug() << "QJsonValRef int g:" << g;
+    qDebug() << "QJsonValRef int b:" << b;
 
 }
+
+//QJsonObject JsonHandler::makeJsonObject(QJsonObject json_obj)
+//{
+//    //qDebug() << "makeJsonObject called for: ";
+//    //qDebug() << json_obj;
+
+//    m_jsonObj = json_obj;
+
+//    //put it somewhere else :D
+//    readColorFromJsonObject(m_jsonObj);
+
+//    return json_obj;
+//}
+
+//void JsonHandler::readColorFromJsonObject(QJsonObject json_obj)
+//{
+//    int r = 0, g = 0, b = 0;
+//    QJsonValue r_val, g_val, b_val;
+
+//    if (json_obj.contains("red"))
+//    {
+//        //qDebug() << "contains red";
+//        r_val = json_obj.find("red").value();
+//        r = r_val.toVariant().toInt();
+//    }
+//    if (json_obj.contains("green"))
+//    {
+//        //qDebug() << "contains green";
+//        g_val = json_obj.find("green").value();
+//        g = g_val.toVariant().toInt();
+//    }
+//    if (json_obj.contains("blue"))
+//    {
+//        //qDebug() << "contains blue";
+//        b_val = json_obj.find("blue").value();
+//        b = b_val.toVariant().toInt();
+//    }
+
+//    m_red = r;
+//    m_green = g;
+//    m_blue = b;
+
+//    //qDebug() << "QJsonValRef:" << r_val;
+//    //qDebug() << "QJsonValRef:" << g_val;
+//    //qDebug() << "QJsonValRef:" << b_val;
+
+//    qDebug() << "QJsonValRef int r:" << r;
+//    qDebug() << "QJsonValRef int g:" << g;
+//    qDebug() << "QJsonValRef int b:" << b;
+
+//}

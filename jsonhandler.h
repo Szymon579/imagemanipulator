@@ -2,6 +2,7 @@
 #define JSONHANDLER_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class JsonHandler : public QObject
 {
@@ -11,21 +12,26 @@ class JsonHandler : public QObject
 public:
     explicit JsonHandler(QObject *parent = nullptr);
 
-    inline int getJsonR(){ return json_r ;};
-    inline int getJsonG(){ return json_g;};
-    inline int getJsonB(){ return json_b;};
+    inline QJsonObject getJsonObject(){ return m_json_obj; };
+
+    int getJsonR(){ return m_red; };
+    int getJsonG(){ return m_green; };
+    int getJsonB(){ return m_blue; };
+
 
 public slots:
-    void writeColorToJson(QString r, QString g, QString b);
-    void readColorFromJson();
+    QJsonObject makeJsonObject(QJsonObject json_obj);
+    void readColorFromJsonObject(QJsonObject json_obj);
 
 signals:
 
 
-private:
-    int json_r;
-    int json_g;
-    int json_b;
+public:
+    QJsonObject m_json_obj;
+
+    static int m_red;
+    static int m_green;
+    static int m_blue;
 };
 
 #endif // JSONHANDLER_H

@@ -16,8 +16,8 @@ set(PROJECT_SOURCES
         main.cpp
         imageprocessor.cpp
         imageprocessor.h
-        imageprovider.cpp
-        imageprovider.h
+        #imageprovider.cpp
+        #imageprovider.h
         jsonhandler.cpp
         jsonhandler.h
         qml.qrc
